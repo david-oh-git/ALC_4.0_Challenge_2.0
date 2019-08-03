@@ -27,8 +27,4 @@ public class FireBaseUtility {
 
 
 
-    public static void fbInitReference(String ref){
-        fbDatabase = FirebaseDatabase.getInstance();
-    }/*end fbInit*/
-
 } /*end FirebaseUtility*/

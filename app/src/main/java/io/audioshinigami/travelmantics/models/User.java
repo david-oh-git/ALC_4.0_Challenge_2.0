@@ -1,4 +1,4 @@
-package io.audioshinigami.travelmantics;
+package io.audioshinigami.travelmantics.models;
 
 import com.google.firebase.firestore.Exclude;
 
