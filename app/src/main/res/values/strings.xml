@@ -2,4 +2,8 @@
     <string name="app_name">Travelmantics</string>
     <string name="str_signin_btntxt">Email sign in </string>
     <string name="str_googlebtn">google sign in </string>
+    <string name="str_email_login_btn">Send</string>
+    <string name="str_edit_email">Enter email here</string>
+    <string name="str_email_edit_password">Enter password</string>
+    <string name="str_email_activity_title">Sign In</string>
 </resources>
