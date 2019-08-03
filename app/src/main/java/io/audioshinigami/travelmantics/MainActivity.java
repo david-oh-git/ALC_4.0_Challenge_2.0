@@ -1,16 +1,18 @@
 package io.audioshinigami.travelmantics;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
+import io.audioshinigami.travelmantics.activities.BaseActivity;
 import io.audioshinigami.travelmantics.repository.FireBRepository;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
 implements View.OnClickListener {
 
     public static String TAG =  MainActivity.class.getSimpleName();
@@ -42,6 +44,8 @@ implements View.OnClickListener {
         else {
             Toast.makeText(this, "User does not exist", Toast.LENGTH_LONG).show();
         }
+
+        FireBRepository.getInstance().signIn(this, "hirakoshinji@gmail.com", "shabalaka");
     }
 
 
