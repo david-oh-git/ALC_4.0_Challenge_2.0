@@ -8,4 +8,6 @@
     <string name="str_email_activity_title">Sign In</string>
     <string name="str_btn_login">Sign In</string>
     <string name="str_imgvw_description">Deal image placeholder</string>
+    <string name="save_menu">save</string>
+    <string name="delete_deal">delete</string>
 </resources>
