@@ -8,7 +8,9 @@ public class DealRepository {
 
     }
 
+    public void addDeal(){
 
+    }
 
     public static DealRepository getInstance(){
         if( instance == null ){
