@@ -2,25 +2,23 @@ package io.audioshinigami.travelmantics.repository;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
 
 import io.audioshinigami.travelmantics.Auth;
 
 
-public class FireBRepository {
+public class AuthRepository {
 
-    private static FireBRepository instance;
-    private FirebaseAuth firebaseAuth;
+    private static AuthRepository instance;
 
-    private FireBRepository(){
+    private AuthRepository(){
 
     }
 
-    public static FireBRepository getInstance(){
+    public static AuthRepository getInstance(){
         if( instance == null ){
-            synchronized ( FireBRepository.class ){
+            synchronized ( AuthRepository.class ){
                 if( instance == null ){
-                    instance = new FireBRepository();
+                    instance = new AuthRepository();
                 } /*end IF*/
             }
         } /*end IF*/

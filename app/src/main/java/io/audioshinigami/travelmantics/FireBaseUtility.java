@@ -1,13 +1,19 @@
 package io.audioshinigami.travelmantics;
 
-import com.google.firebase.auth.FirebaseAuth;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import io.audioshinigami.travelmantics.models.User;
+import io.audioshinigami.travelmantics.utility.Utility;
 
 public class FireBaseUtility {
 
-    public static FirebaseAuth firebaseAuth;
     private static FireBaseUtility instance;
-    public static FirebaseFirestore fbDatabase;
 
     private FireBaseUtility() {
     }
@@ -24,6 +30,26 @@ public class FireBaseUtility {
         return instance;
 
     } /*end getInstance*/
+
+    public void addUserToFireBase(User user){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection(Utility.user_location).document(user.email)
+                .set(user.toMap())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(MainActivity.TAG, "user added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(MainActivity.TAG, "unable to add user");
+                    }
+                });
+
+    } /*end addUser*/
 
 
 

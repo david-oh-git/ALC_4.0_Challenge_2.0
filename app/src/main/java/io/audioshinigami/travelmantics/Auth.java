@@ -15,6 +15,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import io.audioshinigami.travelmantics.models.User;
+
 public class Auth {
 
     private static Auth instance;
@@ -41,7 +43,7 @@ public class Auth {
         });
     } /* end if userExists*/
 
-    public void signUp(final AppCompatActivity context, String email, String password){
+    public void signUp(final AppCompatActivity context, final String email, String password){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -51,6 +53,7 @@ public class Auth {
                         if( task.isSuccessful()){
                             Toast.makeText(context,"Signup successful", Toast.LENGTH_LONG)
                                     .show();
+                            FireBaseUtility.getInstance().addUserToFireBase(new User(email));
                         } /*end IF*/
                         else {
                             Toast.makeText(context,"Oops !! something went wrong", Toast.LENGTH_LONG)
@@ -86,6 +89,8 @@ public class Auth {
                     }
                 });
     } /* end signIn*/
+
+
 
     public static Auth getInstance(){
         if( instance == null ){

@@ -23,7 +23,7 @@
 
 
     <Button
-        android:id="@+id/id_btn_email_signin"
+        android:id="@+id/id_btn_launch_emailact"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="208dp"
@@ -31,13 +31,13 @@
         android:drawablePadding="@dimen/dimen_btn_icon_padd"
         android:text="@string/str_signin_btntxt"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="@+id/id_btn_launch_googleact"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button3"
+        app:layout_constraintStart_toStartOf="@+id/id_btn_launch_googleact"
         app:layout_constraintTop_toBottomOf="@id/appbar" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/id_btn_launch_googleact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -49,5 +49,5 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_btn_email_signin" />
+        app:layout_constraintTop_toBottomOf="@+id/id_btn_launch_emailact" />
 </androidx.constraintlayout.widget.ConstraintLayout>
