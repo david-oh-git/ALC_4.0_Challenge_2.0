@@ -7,4 +7,5 @@
     <string name="str_email_edit_password">Enter password</string>
     <string name="str_email_activity_title">Sign In</string>
     <string name="str_btn_login">Sign In</string>
+    <string name="str_imgvw_description">Deal image placeholder</string>
 </resources>
