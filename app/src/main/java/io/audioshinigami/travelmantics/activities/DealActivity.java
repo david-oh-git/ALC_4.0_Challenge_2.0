@@ -45,6 +45,7 @@ import java.nio.file.Paths;
 import io.audioshinigami.travelmantics.R;
 import io.audioshinigami.travelmantics.models.Deal;
 import io.audioshinigami.travelmantics.repository.DealRepository;
+import io.audioshinigami.travelmantics.services.UploadImageIntentService;
 import io.audioshinigami.travelmantics.utility.Utility;
 
 public class DealActivity extends AppCompatActivity {
@@ -120,7 +121,11 @@ public class DealActivity extends AppCompatActivity {
         deal.setDescription(descriptionEdit.getText().toString());
         deal.setPrice(Integer.parseInt(priceEdit.getText().toString()));
 
+        if(imagePresent){
+            UploadImageIntentService.startActionUpload(this, deal.getAbsPath());
+        }
         DealRepository.getInstance().addDeal(deal, this);
+
     }
 
     @Override
@@ -161,34 +166,6 @@ public class DealActivity extends AppCompatActivity {
         }
     }
 
-    public void uploadImage(String absFilePath){
-        String filename = absFilePath.substring( absFilePath.lastIndexOf('/')+1);
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference imageRef = storage.getReference().child(Utility.image_location)
-                .child(filename);
-
-        try{
-            InputStream stream = new FileInputStream(new File(absFilePath));
-            UploadTask imagetask = imageRef.putStream(stream);
-
-            imagetask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getBaseContext(), "Failed to upload",
-                            Toast.LENGTH_LONG).show();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getBaseContext(), "Image upload success",
-                            Toast.LENGTH_LONG).show();
-                    Log.d("cata", "url is : " + taskSnapshot.getMetadata().getPath());
-                }
-            });
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-    } /*end upload*/
 
     private String getFilepath(Uri selectedImage){
 
