@@ -5,11 +5,13 @@ import com.google.firebase.firestore.Exclude;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.audioshinigami.travelmantics.utility.Utility;
+
 public class Deal {
 
     private String title;
     private String description;
-    private int price;
+    private String price;
     private String imageUrl;
     private String imageName;
     private String absPath;
@@ -18,7 +20,7 @@ public class Deal {
 
     }
 
-    public Deal(String title, String description, int price, String imageUrl, String imageName) {
+    public Deal(String title, String description, String price, String imageUrl, String imageName) {
         this.title = title;
         this.description = description;
         this.price = price;
@@ -42,11 +44,11 @@ public class Deal {
         this.description = description;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -75,14 +77,24 @@ public class Deal {
     }
 
     @Exclude
-    public Map<String, Object> toMap(){
-        HashMap<String, Object> addMe =  new HashMap<>();
-        addMe.put("title", getTitle());
-        addMe.put("description", getDescription());
-        addMe.put("price", getPrice());
-        addMe.put("imageUrl",getImageUrl());
-        addMe.put("imageName", getImageName());
+    public Map<String, String> toMap(){
+        HashMap<String, String> addMe =  new HashMap<>();
+        addMe.put(Utility.title_key, getTitle());
+        addMe.put(Utility.description_key, getDescription());
+        addMe.put(Utility.price_key, getPrice());
+        addMe.put(Utility.image_url_key,getImageUrl());
+        addMe.put(Utility.image_name_key, getImageName());
 
         return addMe;
     } /*end to Map*/
+
+    public static Deal mapToDeal(Map<String, Object> dealMap){
+        String title = (String) dealMap.get(Utility.title_key);
+        String description = (String) dealMap.get(Utility.description_key);
+        String price = (String) dealMap.get(Utility.price_key);
+        String imageUrl = (String) dealMap.get(Utility.image_url_key);
+        String imagename = (String) dealMap.get(Utility.image_name_key);
+
+        return new Deal(title, description, price, imageUrl, imagename);
+    } /*end mapToDeal*/
 }

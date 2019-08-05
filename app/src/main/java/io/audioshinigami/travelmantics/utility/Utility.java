@@ -14,6 +14,11 @@ public class Utility {
     public static int PICTURE_RESULT = 77;
     public static int SD_REQCODE = 88;
     public static String image_location = "photos";
+    public static String title_key = "title";
+    public static String description_key = "description";
+    public static String price_key = "price";
+    public static String image_url_key = "imageUrl";
+    public static String image_name_key = "imageName";
 
     private static boolean isStorageReadable(Context context){
         return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE ) == PackageManager.PERMISSION_GRANTED;

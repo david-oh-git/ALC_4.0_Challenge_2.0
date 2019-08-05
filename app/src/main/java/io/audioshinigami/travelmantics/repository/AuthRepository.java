@@ -2,7 +2,6 @@ package io.audioshinigami.travelmantics.repository;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import io.audioshinigami.travelmantics.Auth;
 
 

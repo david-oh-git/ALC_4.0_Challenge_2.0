@@ -16,8 +16,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import io.audioshinigami.travelmantics.SignInOptionsActivity;
 import io.audioshinigami.travelmantics.R;
+import io.audioshinigami.travelmantics.SignInOptionsActivity;
 import io.audioshinigami.travelmantics.repository.DealRepository;
 
 public class HomeActivity extends AppCompatActivity

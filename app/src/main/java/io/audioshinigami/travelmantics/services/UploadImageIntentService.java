@@ -1,8 +1,8 @@
 package io.audioshinigami.travelmantics.services;
 
 import android.app.IntentService;
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 
 import io.audioshinigami.travelmantics.repository.DealRepository;
 

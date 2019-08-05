@@ -1,10 +1,6 @@
 package io.audioshinigami.travelmantics.repository;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,17 +10,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -38,7 +31,7 @@ import io.audioshinigami.travelmantics.utility.Utility;
 public class DealRepository {
 
     private static DealRepository instance;
-    private ArrayList<Deal> deals;
+    private ArrayList<Deal> deals = new ArrayList<>();
 
     private DealRepository(){
 
@@ -107,9 +100,10 @@ public class DealRepository {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("cata",document.getId() +" : "+ document.getData());
 
-                                Map<String, Object> deal = document.getData();
-                                String title = (String) deal.get("title");
-                                Log.d("cata","title is : " + title);
+                                Map<String, Object> dealMap = document.getData();
+                                Deal deal = Deal.mapToDeal(dealMap);
+                                deals.add(deal);
+                                Log.d("cata","data size is : " + deals.size());
                             }
                         }
                     }
