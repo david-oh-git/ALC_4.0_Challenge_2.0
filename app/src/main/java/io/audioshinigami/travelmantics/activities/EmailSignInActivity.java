@@ -4,15 +4,21 @@ package io.audioshinigami.travelmantics.activities;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import io.audioshinigami.travelmantics.R;
 import io.audioshinigami.travelmantics.repository.AuthRepository;
 
-public class EmailActivity extends BaseActivity
+public class EmailSignInActivity extends AppCompatActivity
  implements View.OnClickListener {
 
     private Button signUp;
@@ -23,6 +29,13 @@ public class EmailActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if( getSupportActionBar() != null ){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         if( getSupportActionBar() != null )
             getSupportActionBar().setTitle(getResources().getString(R.string.str_email_activity_title));
 
@@ -31,6 +44,7 @@ public class EmailActivity extends BaseActivity
 
         login = findViewById(R.id.id_btn_email_login);
         login.setOnClickListener(this);
+
     }
 
     @Override
@@ -41,6 +55,14 @@ public class EmailActivity extends BaseActivity
         else if( view.getId() == R.id.id_btn_email_login){
             login();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if( item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return true;
     }
 
     private void login() {

@@ -3,6 +3,8 @@
     package="io.audioshinigami.travelmantics">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
 
     <application
         android:allowBackup="true"
@@ -12,8 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".activities.DealActivity"></activity>
-        <activity android:name=".activities.EmailActivity" />
-        <activity android:name=".activities.BaseActivity" />
+        <activity android:name=".activities.EmailSignInActivity" />
         <activity android:name=".activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".SignInOptionsActivity" />
     </application>
 
 </manifest>

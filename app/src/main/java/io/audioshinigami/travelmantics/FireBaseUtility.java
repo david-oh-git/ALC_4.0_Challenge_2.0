@@ -39,13 +39,13 @@ public class FireBaseUtility {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(MainActivity.TAG, "user added successfully");
+                        Log.d(SignInOptionsActivity.TAG, "user added successfully");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(MainActivity.TAG, "unable to add user");
+                        Log.d(SignInOptionsActivity.TAG, "unable to add user");
                     }
                 });
 

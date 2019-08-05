@@ -59,7 +59,7 @@ public class Auth {
                             Toast.makeText(context,"Oops !! something went wrong", Toast.LENGTH_LONG)
                                     .show();
                             if(task.getException().getMessage() != null ){
-                                Log.d(MainActivity.TAG, "Error msg : " + task.getException().getMessage());
+                                Log.d(SignInOptionsActivity.TAG, "Error msg : " + task.getException().getMessage());
                             }
 
                         }
@@ -77,13 +77,14 @@ public class Auth {
                         if( task.isSuccessful()){
                             Toast.makeText(context,"Welcome ..", Toast.LENGTH_LONG)
                                     .show();
+                            context.finish();
                         } /*end IF*/
                         else {
                             Toast.makeText(context,"Oops !! something went wrong", Toast.LENGTH_LONG)
                                     .show();
 
                             if(task.getException().getMessage() != null ){
-                                Log.d(MainActivity.TAG, "Error msg : " + task.getException().getMessage());
+                                Log.d(SignInOptionsActivity.TAG, "Error msg : " + task.getException().getMessage());
                             }
                         }
                     }

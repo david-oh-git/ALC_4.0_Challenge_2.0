@@ -12,6 +12,7 @@ public class Deal {
     private int price;
     private String imageUrl;
     private String imageName;
+    private String absPath;
 
     public Deal(){
 
@@ -63,6 +64,14 @@ public class Deal {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+
+    public String getAbsPath() {
+        return absPath;
+    }
+
+    public void setAbsPath(String absPath) {
+        this.absPath = absPath;
     }
 
     @Exclude

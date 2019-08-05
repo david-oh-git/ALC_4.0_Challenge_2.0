@@ -9,16 +9,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import io.audioshinigami.travelmantics.MainActivity;
+import io.audioshinigami.travelmantics.SignInOptionsActivity;
 import io.audioshinigami.travelmantics.R;
 
-public class HomeActivity extends BaseActivity
+public class HomeActivity extends AppCompatActivity
  implements View.OnClickListener {
 
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -31,9 +32,10 @@ public class HomeActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        if( getSupportActionBar() != null){
-            getSupportActionBar().setTitle("Travelmantics");
-        } /*end IF*/
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
 
         fbAuth = FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -41,7 +43,7 @@ public class HomeActivity extends BaseActivity
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = fbAuth.getCurrentUser();
                 if( user == null ){
-                    launchActivity(MainActivity.class);
+                    launchActivity(SignInOptionsActivity.class);
                 }else {
                     Log.v("TAG", "onAuthStateChanged:signed_in:");
                     Toast.makeText(HomeActivity.this, "User is logged in", Toast.LENGTH_SHORT).show();
