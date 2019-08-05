@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import io.audioshinigami.travelmantics.SignInOptionsActivity;
 import io.audioshinigami.travelmantics.R;
+import io.audioshinigami.travelmantics.repository.DealRepository;
 
 public class HomeActivity extends AppCompatActivity
  implements View.OnClickListener {
@@ -76,6 +77,7 @@ public class HomeActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         fbAuth.addAuthStateListener(authStateListener);
+        DealRepository.getInstance().getAllDeals();
     }
 
     @Override

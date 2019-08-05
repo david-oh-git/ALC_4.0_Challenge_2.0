@@ -1,10 +1,8 @@
 package io.audioshinigami.travelmantics.activities;
 
 
-
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;

@@ -27,7 +27,7 @@ public class UploadImageIntentService extends IntentService {
      *
      * @see IntentService
      */
-    
+
     public static void startActionUpload(Context context, String absPath) {
         Intent intent = new Intent(context, UploadImageIntentService.class);
         intent.setAction(ACTION_UPLOAD);
