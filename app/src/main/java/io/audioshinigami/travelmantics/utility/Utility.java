@@ -8,8 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.security.Permission;
-
 public class Utility {
     public static String user_location = "users";
     public static String deal_location = "deals";
@@ -17,7 +15,7 @@ public class Utility {
     public static int SD_REQCODE = 88;
     public static String image_location = "photos";
 
-    public static boolean isStorageReadable(Context context){
+    private static boolean isStorageReadable(Context context){
         return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE ) == PackageManager.PERMISSION_GRANTED;
     } /*end isStroe*/
 

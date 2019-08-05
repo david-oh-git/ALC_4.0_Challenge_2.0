@@ -30,7 +30,7 @@ public class DealRepository {
     public void addDeal(Deal deal, final Context context){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection(Utility.deal_location).document(deal.getTitle())
+        db.collection(Utility.deal_location).document()
                 .set(deal.toMap())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

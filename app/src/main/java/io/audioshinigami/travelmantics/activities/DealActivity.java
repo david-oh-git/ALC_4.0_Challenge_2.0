@@ -15,11 +15,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ import java.nio.file.Paths;
 
 import io.audioshinigami.travelmantics.R;
 import io.audioshinigami.travelmantics.models.Deal;
+import io.audioshinigami.travelmantics.repository.DealRepository;
 import io.audioshinigami.travelmantics.utility.Utility;
 
 public class DealActivity extends AppCompatActivity {
@@ -51,6 +54,10 @@ public class DealActivity extends AppCompatActivity {
 
     private boolean imagePresent;
     private Deal deal;
+
+    private EditText titleEdit;
+    private EditText descriptionEdit;
+    private EditText priceEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,14 +101,26 @@ public class DealActivity extends AppCompatActivity {
         if( item.getItemId() == android.R.id.home){
             finish();
         }else if( item.getItemId() == R.id.action_save_menu){
-            Log.d("cata", "clicked");
-            uploadImage(imageView);
+            saveDeal();
         }
         return true;
     }
 
     private void saveDeal() {
 
+        titleEdit = findViewById(R.id.id_edittxt_title);
+        descriptionEdit = findViewById(R.id.id_edittxt_description);
+        priceEdit = findViewById(R.id.id_edittxt_price);
+
+        if( !isFormValid(titleEdit, descriptionEdit, priceEdit)){
+            return;
+        } /*end IF*/
+
+        deal.setTitle(titleEdit.getText().toString());
+        deal.setDescription(descriptionEdit.getText().toString());
+        deal.setPrice(Integer.parseInt(priceEdit.getText().toString()));
+
+        DealRepository.getInstance().addDeal(deal, this);
     }
 
     @Override
@@ -121,6 +140,7 @@ public class DealActivity extends AppCompatActivity {
 //                InputStream stream = getContentResolver().openInputStream(imageUri);
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
                 imageView.setImageBitmap(bitmap);
+                imageView.setVisibility(View.VISIBLE);
                 imagePresent = true;
             }catch (IOException e){
                 e.printStackTrace();
@@ -141,14 +161,14 @@ public class DealActivity extends AppCompatActivity {
         }
     }
 
-    public void uploadImage(ImageView imageView){
+    public void uploadImage(String absFilePath){
+        String filename = absFilePath.substring( absFilePath.lastIndexOf('/')+1);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference imageRef = storage.getReference().child(Utility.image_location)
-                .child(deal.getImageName());
-
+                .child(filename);
 
         try{
-            InputStream stream = new FileInputStream(new File(deal.getAbsPath()));
+            InputStream stream = new FileInputStream(new File(absFilePath));
             UploadTask imagetask = imageRef.putStream(stream);
 
             imagetask.addOnFailureListener(new OnFailureListener() {
@@ -188,6 +208,44 @@ public class DealActivity extends AppCompatActivity {
 
         return imgDecodableString;
     }
+
+    private boolean isFormValid(EditText titleEdit, EditText descriptionEdit, EditText priceEdit){
+        /*checks if email and password is valid */
+
+        boolean valid = true;
+        String email = titleEdit.getText().toString();
+
+        if( TextUtils.isEmpty(email) ){
+            titleEdit.requestFocus();
+            titleEdit.setError("Required.");
+            valid = false;
+        }else {
+            titleEdit.setError(null);
+        }
+
+
+
+        String password = descriptionEdit.getText().toString();
+        if( TextUtils.isEmpty(password)){
+            descriptionEdit.requestFocus();
+            descriptionEdit.setError("Required.");
+            valid = false;
+        }else {
+            descriptionEdit.setError(null);
+        }
+
+        String price =  priceEdit.getText().toString();
+        if( TextUtils.isEmpty(price)){
+            priceEdit.requestFocus();
+            priceEdit.setError("Required.");
+            valid = false;
+        }else {
+            priceEdit.setError(null);
+        }
+
+        return valid;
+
+    } /*end isFormvalid*/
 
 
 }

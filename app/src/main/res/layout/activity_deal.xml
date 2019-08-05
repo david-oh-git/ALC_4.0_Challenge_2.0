@@ -75,6 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/id_edittxt_description" />
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/id_imagevw_select"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -86,6 +87,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_btn_select_image"
-        android:src="@drawable/ic_imageplacholder" />
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
