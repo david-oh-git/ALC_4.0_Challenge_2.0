@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
 
+import io.audioshinigami.travelmantics.adaptors.DealAdaptor;
 import io.audioshinigami.travelmantics.models.Deal;
 import io.audioshinigami.travelmantics.utility.Utility;
 
@@ -88,7 +89,7 @@ public class DealRepository {
 
     }
 
-    public void getAllDeals(){
+    public void getAllDeals(final DealAdaptor adaptor){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection(Utility.deal_location)
@@ -104,7 +105,9 @@ public class DealRepository {
                                 Deal deal = Deal.mapToDeal(dealMap);
                                 deals.add(deal);
                                 Log.d("cata","data size is : " + deals.size());
-                            }
+                            }/*end FOR*/
+
+                            adaptor.setData(deals);
                         }
                     }
                 });

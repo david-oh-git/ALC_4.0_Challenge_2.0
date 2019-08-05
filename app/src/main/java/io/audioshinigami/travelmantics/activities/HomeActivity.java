@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -18,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import io.audioshinigami.travelmantics.R;
 import io.audioshinigami.travelmantics.SignInOptionsActivity;
+import io.audioshinigami.travelmantics.adaptors.DealAdaptor;
 import io.audioshinigami.travelmantics.repository.DealRepository;
 
 public class HomeActivity extends AppCompatActivity
@@ -28,6 +31,7 @@ public class HomeActivity extends AppCompatActivity
 
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
+    private DealAdaptor adaptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +75,21 @@ public class HomeActivity extends AppCompatActivity
     } /*end onCreate*/
 
     private void setUpRecyclerView() {
+        recyclerView = findViewById(R.id.id_recyclerview);
+        adaptor = new DealAdaptor();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adaptor);
+
+        DealRepository.getInstance().getAllDeals(adaptor);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         fbAuth.addAuthStateListener(authStateListener);
-        DealRepository.getInstance().getAllDeals();
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override

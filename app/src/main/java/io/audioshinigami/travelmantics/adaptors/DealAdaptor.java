@@ -38,5 +38,6 @@ public class DealAdaptor extends RecyclerView.Adapter<DealViewHolder> {
 
     public void setData(ArrayList<Deal> data){
         this.data = data;
+        notifyDataSetChanged();
     } /*end setData*/
 }
