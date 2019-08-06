@@ -2,6 +2,6 @@
 <resources>
     <dimen name="dimen_btn_icon_padd">4dp</dimen>
     <dimen name="dimen_btn_standard_margin">16dp</dimen>
-    <dimen name="dimen_cardview_margin">8dp</dimen>
+    <dimen name="dimen_cardview_margin">4dp</dimen>
     <dimen name="dimen_edittxt_margin">8dp</dimen>
 </resources>

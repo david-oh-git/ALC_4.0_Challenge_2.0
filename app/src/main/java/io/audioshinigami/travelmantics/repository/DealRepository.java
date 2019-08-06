@@ -98,6 +98,7 @@ public class DealRepository {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if( task.isSuccessful()){
+                            deals.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("cata",document.getId() +" : "+ document.getData());
 

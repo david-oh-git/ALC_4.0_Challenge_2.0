@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity
                 }else {
                     Log.v("TAG", "onAuthStateChanged:signed_in:");
                     Toast.makeText(HomeActivity.this, "User is logged in", Toast.LENGTH_SHORT).show();
-                    setUpRecyclerView();
+
                 }
             }
         };
@@ -60,6 +60,7 @@ public class HomeActivity extends AppCompatActivity
         fab = findViewById(R.id.id_fab);
         fab.setOnClickListener(this);
         recyclerView = findViewById(R.id.id_recyclerview);
+        setUpRecyclerView();
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -79,6 +80,7 @@ public class HomeActivity extends AppCompatActivity
         adaptor = new DealAdaptor();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adaptor);
+
 
         DealRepository.getInstance().getAllDeals(adaptor);
     }

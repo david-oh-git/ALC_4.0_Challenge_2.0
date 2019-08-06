@@ -15,7 +15,7 @@ public class UploadImageIntentService extends IntentService {
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
     private static final String ACTION_UPLOAD = "io.audioshinigami.travelmantics.services.action.IMAGE_UPLOAD";
 
-    private static final String ABS_PATH = "io.audioshinigami.travelmantics.services.extra.PARAM1";
+    private static final String ABS_PATH = "io.audioshinigami.travelmantics.services.extra.ABS_PATH";
 
     public UploadImageIntentService() {
         super("UploadImageIntentService");
