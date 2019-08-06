@@ -64,8 +64,8 @@ public class EmailSignInActivity extends AppCompatActivity
     }
 
     private void login() {
-        EditText emailEdit = findViewById(R.id.id_editxt_email);
-        EditText passwordEdit = findViewById(R.id.id_editxt_password);
+        EditText emailEdit = findViewById(R.id.id_edit_email_layout);
+        EditText passwordEdit = findViewById(R.id.id_edit_password_layout);
 
         if(!isFormValid(emailEdit, passwordEdit)){
             return;
@@ -80,8 +80,8 @@ public class EmailSignInActivity extends AppCompatActivity
     } /*end login*/
 
     private void createAccount(){
-        EditText emailEdit = findViewById(R.id.id_editxt_email);
-        EditText passwordEdit = findViewById(R.id.id_editxt_password);
+        EditText emailEdit = findViewById(R.id.id_edit_email_layout);
+        EditText passwordEdit = findViewById(R.id.id_edit_password_layout);
 
         if(!isFormValid(emailEdit, passwordEdit)){
             return;
