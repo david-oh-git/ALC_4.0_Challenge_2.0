@@ -12,4 +12,7 @@
     <string name="delete_deal">delete</string>
     <string name="str_btn_select_image">Select Image</string>
     <string name="str_menu_logout">Log out</string>
+    <string name="str_edit_title">Title</string>
+    <string name="str_edittxt_price">Price</string>
+    <string name="str_edit_description">Description</string>
 </resources>

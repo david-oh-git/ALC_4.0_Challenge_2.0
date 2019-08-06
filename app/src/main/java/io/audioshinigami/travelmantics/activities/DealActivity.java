@@ -21,6 +21,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.io.IOException;
 
 import io.audioshinigami.travelmantics.R;
@@ -31,15 +33,14 @@ import io.audioshinigami.travelmantics.utility.Utility;
 
 public class DealActivity extends AppCompatActivity {
 
-    private Button uploadBtn;
     private ImageView imageView;
 
     private boolean imagePresent;
     private Deal deal;
 
-    private EditText titleEdit;
-    private EditText descriptionEdit;
-    private EditText priceEdit;
+    private TextInputEditText titleEdit;
+    private TextInputEditText descriptionEdit;
+    private TextInputEditText priceEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class DealActivity extends AppCompatActivity {
 
         Utility.requestReadPermission(this);
 
-        uploadBtn = findViewById(R.id.id_btn_select_image);
+        Button uploadBtn = findViewById(R.id.id_btn_select_image);
         imageView = findViewById(R.id.id_imagevw_select);
 
         uploadBtn.setOnClickListener(new View.OnClickListener() {
@@ -167,38 +168,38 @@ public class DealActivity extends AppCompatActivity {
         return imgDecodableString;
     }
 
-    private boolean isFormValid(EditText titleEdit, EditText descriptionEdit, EditText priceEdit){
+    private boolean isFormValid(TextInputEditText titleEdit, TextInputEditText descriptionEdit,
+                                TextInputEditText priceEdit ){
         /*checks if email and password is valid */
 
         boolean valid = true;
         String email = titleEdit.getText().toString();
 
+        TextInputEditText titleLayout = findViewById(R.id.id_edittxt_title);
+        TextInputEditText descriptionLayout = findViewById(R.id.id_edittxt_description);
+        TextInputEditText priceLayout = findViewById(R.id.id_edittxt_price);
+
         if( TextUtils.isEmpty(email) ){
             titleEdit.requestFocus();
-            titleEdit.setError("Required.");
+//            titleEdit.setError("Required.");
+            titleLayout.setError("Required.");
             valid = false;
-        }else {
-            titleEdit.setError(null);
         }
-
-
 
         String password = descriptionEdit.getText().toString();
         if( TextUtils.isEmpty(password)){
             descriptionEdit.requestFocus();
-            descriptionEdit.setError("Required.");
+//            descriptionEdit.setError("Required.");
+            descriptionLayout.setError("Required.");
             valid = false;
-        }else {
-            descriptionEdit.setError(null);
         }
 
         String price =  priceEdit.getText().toString();
         if( TextUtils.isEmpty(price)){
             priceEdit.requestFocus();
-            priceEdit.setError("Required.");
+//            priceEdit.setError("Required.");
+            priceLayout.setError("Required.");
             valid = false;
-        }else {
-            priceEdit.setError(null);
         }
 
         return valid;

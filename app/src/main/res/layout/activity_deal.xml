@@ -21,48 +21,74 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <EditText
-        android:hint="Title"
-        android:id="@+id/id_edittxt_title"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/id_edit_layout"
+        app:errorEnabled="true"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
-        android:ems="10"
-        android:inputType="textPersonName"
         android:layout_margin="@dimen/dimen_edittxt_margin"
-        app:layout_constraintTop_toBottomOf="@+id/appbar"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="136dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/str_edit_title"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteX="99dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar">
 
-    <EditText
-        android:hint="Price"
-        android:id="@+id/id_edittxt_price"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/id_edittxt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:hint="@string/str_edittxt_price"
+        app:errorEnabled="true"
+        android:id="@+id/id_edit_price_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@+id/id_edittxt_title"
-        app:layout_constraintStart_toStartOf="@+id/id_edittxt_title"
-        app:layout_constraintEnd_toEndOf="@+id/id_edittxt_title"
+        app:layout_constraintTop_toBottomOf="@+id/id_edit_layout"
+        app:layout_constraintStart_toStartOf="@+id/id_edit_layout"
+        app:layout_constraintEnd_toEndOf="@+id/id_edit_layout"
         android:layout_marginTop="@dimen/dimen_edittxt_margin"
-        tools:layout_editor_absoluteX="98dp" />
+        tools:layout_editor_absoluteX="98dp">
 
-    <EditText
-        android:hint="Description"
-        android:id="@+id/id_edittxt_description"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/id_edittxt_price"
+            android:ems="10"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:hint="@string/str_edit_description"
+        app:errorEnabled="true"
+        android:id="@+id/id_edit_description_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/id_edittxt_price"
-        app:layout_constraintStart_toStartOf="@+id/id_edittxt_title"
-        app:layout_constraintEnd_toEndOf="@+id/id_edittxt_title"
+        app:layout_constraintTop_toBottomOf="@+id/id_edit_price_layout"
+        app:layout_constraintStart_toStartOf="@+id/id_edit_layout"
+        app:layout_constraintEnd_toEndOf="@+id/id_edit_layout"
         android:layout_marginTop="@dimen/dimen_edittxt_margin"
-        tools:layout_editor_absoluteX="99dp" />
+        tools:layout_editor_absoluteX="99dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/id_edittxt_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine|textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/id_btn_select_image"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:textColor="@android:color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -72,7 +98,7 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_edittxt_description" />
+        app:layout_constraintTop_toBottomOf="@+id/id_edit_description_layout" />
 
     <ImageView
         android:visibility="gone"

@@ -3,6 +3,7 @@ package io.audioshinigami.travelmantics.activities;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,9 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import io.audioshinigami.travelmantics.R;
 import io.audioshinigami.travelmantics.repository.AuthRepository;
@@ -64,8 +68,8 @@ public class EmailSignInActivity extends AppCompatActivity
     }
 
     private void login() {
-        EditText emailEdit = findViewById(R.id.id_edit_email_layout);
-        EditText passwordEdit = findViewById(R.id.id_edit_password_layout);
+        TextInputEditText emailEdit = findViewById(R.id.id_edit_email);
+        TextInputEditText passwordEdit = findViewById(R.id.id_editxt_password);
 
         if(!isFormValid(emailEdit, passwordEdit)){
             return;
@@ -74,14 +78,15 @@ public class EmailSignInActivity extends AppCompatActivity
         String email = emailEdit.getText().toString();
         String password = passwordEdit.getText().toString();
 
+
         AuthRepository.getInstance().ifUserExists(emailEdit.getText().toString());
 
         AuthRepository.getInstance().signIn(this,email,password);
     } /*end login*/
 
     private void createAccount(){
-        EditText emailEdit = findViewById(R.id.id_edit_email_layout);
-        EditText passwordEdit = findViewById(R.id.id_edit_password_layout);
+        TextInputEditText emailEdit = findViewById(R.id.id_edit_email_layout);
+        TextInputEditText passwordEdit = findViewById(R.id.id_edit_password_layout);
 
         if(!isFormValid(emailEdit, passwordEdit)){
             return;
@@ -103,35 +108,43 @@ public class EmailSignInActivity extends AppCompatActivity
         return !password.isEmpty() && password.length() > 5;
     }
 
-    private boolean isFormValid(EditText emailEdit, EditText passwordEdit){
+    private boolean isFormValid(TextInputEditText emailEdit, TextInputEditText passwordEdit){
         /*checks if email and password is valid */
 
         boolean valid = true;
         String email = emailEdit.getText().toString();
+        Log.d("cata", "email is : " + email);
+
+        TextInputLayout emailLayout = findViewById(R.id.id_edit_email_layout);
 
         if( TextUtils.isEmpty(email) ){
             emailEdit.requestFocus();
-            emailEdit.setError("Required.");
+//            emailEdit.setError("Required.");
+            emailLayout.setError("Required.");
             valid = false;
         }
 
         if( !isEmailValid(email) ){
-            emailEdit.setError("Invalid email");
+            emailLayout.setError("Invalid email");
             valid = false;
         }else {
             emailEdit.setError(null);
         }
 
         String password = passwordEdit.getText().toString();
+        TextInputLayout passwordLayout = findViewById(R.id.id_edit_password_layout);
         if( TextUtils.isEmpty(password)){
             passwordEdit.requestFocus();
-            passwordEdit.setError("Required.");
+//            passwordEdit.setError("Required.");
+            passwordLayout.setError("Required.");
             valid = false;
         }
 
         if(!isPasswordValid(password)){
             passwordEdit.requestFocus();
-            passwordEdit.setError("password min of 5 letters");
+//            passwordEdit.setError("password min of 5 letters");
+            passwordLayout.setError("password minimum of 5 letters");
+
             valid = false;
         }
         else {
