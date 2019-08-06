@@ -4,6 +4,8 @@ package io.audioshinigami.travelmantics.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -105,6 +107,27 @@ public class HomeActivity extends AppCompatActivity
         if(view.getId() == R.id.id_fab){
             launchActivity(DealActivity.class);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if( fbAuth.getCurrentUser() != null){
+            getMenuInflater().inflate(R.menu.home_menu, menu);
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if( item.getItemId() == R.id.action_logout_menu){
+            logOut();
+        }
+        return true;
+    }
+
+    private void logOut() {
+        fbAuth.signOut();
     }
 
     private  <T extends AppCompatActivity> void launchActivity(Class<T> inputClass){

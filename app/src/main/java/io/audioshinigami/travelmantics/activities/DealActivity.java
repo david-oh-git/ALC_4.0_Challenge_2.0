@@ -74,7 +74,7 @@ public class DealActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.new_deal_menu, menu);
+        getMenuInflater().inflate(R.menu.deal_menu, menu);
         return true;
     }
 
