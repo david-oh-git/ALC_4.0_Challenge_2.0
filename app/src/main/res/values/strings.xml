@@ -15,4 +15,13 @@
     <string name="str_edit_title">Title</string>
     <string name="str_edittxt_price">Price</string>
     <string name="str_edit_description">Description</string>
+
+    <!--google sign in-->
+    <string name="loading">Loading…</string>
+    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="google_title_text">Google Sign In</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="google_status_fmt">Google User: %s</string>
+    <string name="firebase_status_fmt">Firebase User: %s</string>
 </resources>

@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,9 +51,7 @@ public class HomeActivity extends AppCompatActivity
                 if( user == null ){
                     launchActivity(SignInOptionsActivity.class);
                 }else {
-                    Log.v("TAG", "onAuthStateChanged:signed_in:");
-                    Toast.makeText(HomeActivity.this, "User is logged in", Toast.LENGTH_SHORT).show();
-
+                    Log.v("cata", "onAuthStateChanged:signed_in:");
                 }
             }
         };
@@ -94,6 +91,10 @@ public class HomeActivity extends AppCompatActivity
         ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
+
+        if( fbAuth.getCurrentUser() == null ){
+            launchActivity(SignInOptionsActivity.class);
+        }
     }
 
     @Override
@@ -111,10 +112,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if( fbAuth.getCurrentUser() != null){
-            getMenuInflater().inflate(R.menu.home_menu, menu);
-        }
-
+        getMenuInflater().inflate(R.menu.home_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

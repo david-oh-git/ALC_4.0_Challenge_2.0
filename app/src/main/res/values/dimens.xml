@@ -5,4 +5,9 @@
     <dimen name="dimen_cardview_margin">4dp</dimen>
     <dimen name="dimen_edittxt_margin">8dp</dimen>
     <dimen name="dimen_fab_margin">16dp</dimen>
+
+    <!--google sign in-->
+    <dimen name="icon_top_margin">24dp</dimen>
+    <dimen name="icon_bottom_margin">24dp</dimen>
+    <dimen name="title_bottom_margin">16dp</dimen>
 </resources>

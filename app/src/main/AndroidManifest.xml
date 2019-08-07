@@ -25,7 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignInOptionsActivity" />
+        <activity
+            android:name=".SignInOptionsActivity"
+            />
+        <activity android:name=".activities.googleauth.GoogleSignInActivity" />
     </application>
 
 </manifest>

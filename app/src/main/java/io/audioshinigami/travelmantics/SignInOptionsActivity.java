@@ -4,6 +4,7 @@ package io.audioshinigami.travelmantics;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import io.audioshinigami.travelmantics.activities.EmailSignInActivity;
+import io.audioshinigami.travelmantics.activities.googleauth.GoogleSignInActivity;
 import io.audioshinigami.travelmantics.repository.AuthRepository;
 
 public class SignInOptionsActivity extends AppCompatActivity
@@ -43,6 +45,8 @@ implements View.OnClickListener {
         emailSignIn = findViewById(R.id.id_btn_launch_emailact);
         emailSignIn.setOnClickListener(this);
 
+        findViewById(R.id.id_btn_launch_googleact).setOnClickListener(this);
+
         AuthRepository.getInstance().ifUserExists("hirakoshinji@gmail.com");
 
         fbAuth = FirebaseAuth.getInstance();
@@ -67,8 +71,18 @@ implements View.OnClickListener {
     @Override
     protected void onStart(){
         super.onStart();
-
         fbAuth.addAuthStateListener(authStateListener);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        FirebaseUser user = fbAuth.getCurrentUser();
+        if( user != null ){
+            finish();
+        }
     }
 
     @Override
@@ -84,6 +98,11 @@ implements View.OnClickListener {
         switch (view.getId()){
             case R.id.id_btn_launch_emailact:
                 launchActivity(EmailSignInActivity.class);
+                break;
+
+            case R.id.id_btn_launch_googleact:
+                launchActivity(GoogleSignInActivity.class);
+                finish();
                 break;
         } /*end switch*/
     }
