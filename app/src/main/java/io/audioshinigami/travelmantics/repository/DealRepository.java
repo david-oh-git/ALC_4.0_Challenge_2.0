@@ -7,15 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -26,7 +23,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Map;
 
 import io.audioshinigami.travelmantics.adaptors.DealAdaptor;
@@ -36,7 +32,6 @@ import io.audioshinigami.travelmantics.utility.Utility;
 public class DealRepository {
 
     private static DealRepository instance;
-    private ArrayList<Deal> deals = new ArrayList<>();
 
     private DealRepository(){
 
@@ -120,10 +115,11 @@ public class DealRepository {
                                 case REMOVED:
                                     Log.d(Utility.TAG, "Removed city: " + dc.getDocument().getData());
                                     break;
-                            }
-                        }
+                            } /*end switch*/
 
-                    }
+                        } /* end FOR*/
+
+                    } /*end onEvent*/
                 });
         // [END listen_diffs]
     }
@@ -131,7 +127,6 @@ public class DealRepository {
     private Deal addDeal(Map<String, Object> dealMap){
         return Deal.mapToDeal(dealMap);
     }
-
 
     public static DealRepository getInstance(){
         if( instance == null ){

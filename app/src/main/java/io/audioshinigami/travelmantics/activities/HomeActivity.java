@@ -79,8 +79,11 @@ public class HomeActivity extends AppCompatActivity
         adaptor = new DealAdaptor();
         LinearLayoutManager LM = new LinearLayoutManager(this);
         LM.setReverseLayout(true);
+        LM.setStackFromEnd(true);
+
         recyclerView.setLayoutManager(LM);
         recyclerView.setAdapter(adaptor);
+
 
 //        DealRepository.getInstance().getAllDeals(adaptor);
         DealRepository.getInstance().getAllDeals(adaptor);
