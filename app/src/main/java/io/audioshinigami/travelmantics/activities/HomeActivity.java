@@ -32,7 +32,6 @@ public class HomeActivity extends AppCompatActivity
 
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
-    private DealAdaptor adaptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +75,7 @@ public class HomeActivity extends AppCompatActivity
 
     private void setUpRecyclerView() {
         recyclerView = findViewById(R.id.id_recyclerview);
-        adaptor = new DealAdaptor();
+        DealAdaptor adaptor = new DealAdaptor();
         LinearLayoutManager LM = new LinearLayoutManager(this);
         LM.setReverseLayout(true);
         LM.setStackFromEnd(true);
