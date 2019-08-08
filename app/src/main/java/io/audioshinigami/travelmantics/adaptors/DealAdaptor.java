@@ -40,4 +40,10 @@ public class DealAdaptor extends RecyclerView.Adapter<DealViewHolder> {
         this.data = data;
         notifyDataSetChanged();
     } /*end setData*/
+
+    public void addDeal(Deal deal ){
+        this.data.add(deal);
+        int position = this.data.indexOf(deal);
+        notifyItemChanged(position);
+    } /*end Deal*/
 }

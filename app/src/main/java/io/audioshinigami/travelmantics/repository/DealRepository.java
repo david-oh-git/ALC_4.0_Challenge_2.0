@@ -4,13 +4,17 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -89,30 +93,44 @@ public class DealRepository {
 
     }
 
-    public void getAllDeals(final DealAdaptor adaptor){
+    public void getAllDeals(final DealAdaptor adaptor) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection(Utility.deal_location)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if( task.isSuccessful()){
-                            deals.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("cata",document.getId() +" : "+ document.getData());
-
-                                Map<String, Object> dealMap = document.getData();
-                                Deal deal = Deal.mapToDeal(dealMap);
-                                deals.add(deal);
-                                Log.d("cata","data size is : " + deals.size());
-                            }/*end FOR*/
-
-                            adaptor.setData(deals);
+                    public void onEvent(@Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(Utility.TAG, "listen:error", e);
+                            return;
                         }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d(Utility.TAG, "New city: " + dc.getDocument().getData());
+                                    Map<String, Object> dealMap = dc.getDocument().getData();
+                                    adaptor.addDeal(addDeal(dealMap));
+                                    break;
+                                case MODIFIED:
+                                    Log.d(Utility.TAG, "Modified city: " + dc.getDocument().getData());
+                                    break;
+                                case REMOVED:
+                                    Log.d(Utility.TAG, "Removed city: " + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+
                     }
                 });
-    }// end getAllDoc
+        // [END listen_diffs]
+    }
+
+    private Deal addDeal(Map<String, Object> dealMap){
+        return Deal.mapToDeal(dealMap);
+    }
 
 
     public static DealRepository getInstance(){

@@ -9,6 +9,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 public class Utility {
+
+    public static String TAG = "cata";
     public static String user_location = "users";
     public static String deal_location = "deals";
     public static int PICTURE_RESULT = 77;

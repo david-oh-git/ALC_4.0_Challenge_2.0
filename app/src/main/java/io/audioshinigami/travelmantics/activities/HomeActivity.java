@@ -77,10 +77,12 @@ public class HomeActivity extends AppCompatActivity
     private void setUpRecyclerView() {
         recyclerView = findViewById(R.id.id_recyclerview);
         adaptor = new DealAdaptor();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager LM = new LinearLayoutManager(this);
+        LM.setReverseLayout(true);
+        recyclerView.setLayoutManager(LM);
         recyclerView.setAdapter(adaptor);
 
-
+//        DealRepository.getInstance().getAllDeals(adaptor);
         DealRepository.getInstance().getAllDeals(adaptor);
     }
 
@@ -88,13 +90,14 @@ public class HomeActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         fbAuth.addAuthStateListener(authStateListener);
-        ProgressBar progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
 
         if( fbAuth.getCurrentUser() == null ){
             launchActivity(SignInOptionsActivity.class);
         }
+
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
