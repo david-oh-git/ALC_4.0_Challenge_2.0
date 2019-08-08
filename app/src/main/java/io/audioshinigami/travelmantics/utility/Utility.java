@@ -2,7 +2,9 @@ package io.audioshinigami.travelmantics.utility;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -21,6 +23,7 @@ public class Utility {
     public static String price_key = "price";
     public static String image_url_key = "imageUrl";
     public static String image_name_key = "imageName";
+    public static String activity_bundle_key = "bundle";
 
     private static boolean isStorageReadable(Context context){
         return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE ) == PackageManager.PERMISSION_GRANTED;
@@ -32,4 +35,12 @@ public class Utility {
             ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, SD_REQCODE);
         } /*end IF*/
     } /*end requestRead*/
+
+    public static <T extends AppCompatActivity> void launchActivity(Class<T> inputClass, AppCompatActivity activity,
+                                                               Bundle bundle ){
+        Intent intent = new Intent(activity, inputClass);
+        if( bundle != null )
+            intent.putExtra(activity_bundle_key, bundle);
+        activity.startActivity(intent);
+    } /*end launchActivity*/
 }

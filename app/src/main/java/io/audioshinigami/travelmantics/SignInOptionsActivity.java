@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import io.audioshinigami.travelmantics.activities.EmailSignInActivity;
 import io.audioshinigami.travelmantics.activities.googleauth.GoogleSignInActivity;
 import io.audioshinigami.travelmantics.repository.AuthRepository;
+import io.audioshinigami.travelmantics.utility.Utility;
 
 public class SignInOptionsActivity extends AppCompatActivity
 implements View.OnClickListener {
@@ -97,11 +98,11 @@ implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.id_btn_launch_emailact:
-                launchActivity(EmailSignInActivity.class);
+                Utility.launchActivity(EmailSignInActivity.class, this, null );
                 break;
 
             case R.id.id_btn_launch_googleact:
-                launchActivity(GoogleSignInActivity.class);
+                Utility.launchActivity(GoogleSignInActivity.class, this, null );
                 finish();
                 break;
         } /*end switch*/
@@ -117,11 +118,5 @@ implements View.OnClickListener {
 
         AuthRepository.getInstance().signIn(this, "hirakoshinji@gmail.com", "shabalaka");
     }
-
-    private  <T extends AppCompatActivity> void launchActivity(Class<T> inputClass){
-        Intent intent = new Intent(this, inputClass);
-        startActivity(intent);
-    }
-
 
 }

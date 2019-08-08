@@ -1,7 +1,6 @@
 package io.audioshinigami.travelmantics.activities;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -23,6 +22,7 @@ import io.audioshinigami.travelmantics.R;
 import io.audioshinigami.travelmantics.SignInOptionsActivity;
 import io.audioshinigami.travelmantics.adaptors.DealAdaptor;
 import io.audioshinigami.travelmantics.repository.DealRepository;
+import io.audioshinigami.travelmantics.utility.Utility;
 
 public class HomeActivity extends AppCompatActivity
  implements View.OnClickListener {
@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = fbAuth.getCurrentUser();
                 if( user == null ){
-                    launchActivity(SignInOptionsActivity.class);
+                    Utility.launchActivity(SignInOptionsActivity.class, HomeActivity.this, null);
                 }else {
                     Log.v("cata", "onAuthStateChanged:signed_in:");
                 }
@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity
         fbAuth.addAuthStateListener(authStateListener);
 
         if( fbAuth.getCurrentUser() == null ){
-            launchActivity(SignInOptionsActivity.class);
+            Utility.launchActivity(SignInOptionsActivity.class, this, null);
         }
 
         ProgressBar progressBar = findViewById(R.id.progressBar);
@@ -111,7 +111,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.id_fab){
-            launchActivity(DealActivity.class);
+            Utility.launchActivity(DealActivity.class, this, null);
         }
     }
 
@@ -133,8 +133,4 @@ public class HomeActivity extends AppCompatActivity
         fbAuth.signOut();
     }
 
-    private  <T extends AppCompatActivity> void launchActivity(Class<T> inputClass){
-        Intent intent = new Intent(this, inputClass);
-        startActivity(intent);
-    }
 }
