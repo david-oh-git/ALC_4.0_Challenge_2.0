@@ -23,7 +23,7 @@ public class Utility {
     public static String price_key = "price";
     public static String image_url_key = "imageUrl";
     public static String image_name_key = "imageName";
-    public static String activity_bundle_key = "bundle";
+    public static String absolute_path_key = "abs_path";
 
     private static boolean isStorageReadable(Context context){
         return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE ) == PackageManager.PERMISSION_GRANTED;
@@ -40,7 +40,8 @@ public class Utility {
                                                                Bundle bundle ){
         Intent intent = new Intent(activity, inputClass);
         if( bundle != null )
-            intent.putExtra(activity_bundle_key, bundle);
+            intent.putExtras(bundle);
+
         activity.startActivity(intent);
     } /*end launchActivity*/
 }

@@ -26,6 +26,7 @@ public class Deal {
         this.price = price;
         this.imageUrl = imageUrl;
         this.imageName = imageName;
+        this.absPath = "";
     }
 
     public String getTitle() {
@@ -84,6 +85,7 @@ public class Deal {
         addMe.put(Utility.price_key, getPrice());
         addMe.put(Utility.image_url_key,getImageUrl());
         addMe.put(Utility.image_name_key, getImageName());
+        addMe.put(Utility.absolute_path_key, getAbsPath());
 
         return addMe;
     } /*end to Map*/
@@ -93,8 +95,13 @@ public class Deal {
         String description = (String) dealMap.get(Utility.description_key);
         String price = (String) dealMap.get(Utility.price_key);
         String imageUrl = (String) dealMap.get(Utility.image_url_key);
-        String imagename = (String) dealMap.get(Utility.image_name_key);
+        String imageName = (String) dealMap.get(Utility.image_name_key);
+        String absPath = (String) dealMap.get(Utility.absolute_path_key);
 
-        return new Deal(title, description, price, imageUrl, imagename);
+        Deal deal = new Deal(title, description, price, imageUrl, imageName);
+        deal.setAbsPath(absPath);
+
+        return deal;
+
     } /*end mapToDeal*/
 }

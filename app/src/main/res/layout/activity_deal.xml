@@ -22,6 +22,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/id_edit_layout"
         app:errorEnabled="true"
         android:layout_width="0dp"
@@ -45,6 +46,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:hint="@string/str_edittxt_price"
         app:errorEnabled="true"
         android:id="@+id/id_edit_price_layout"
@@ -66,6 +68,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:hint="@string/str_edit_description"
         app:errorEnabled="true"
         android:id="@+id/id_edit_description_layout"

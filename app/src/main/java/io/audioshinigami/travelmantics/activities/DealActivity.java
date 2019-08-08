@@ -13,8 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,9 +22,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 
+import io.audioshinigami.travelmantics.GlideApp;
 import io.audioshinigami.travelmantics.R;
 import io.audioshinigami.travelmantics.models.Deal;
 import io.audioshinigami.travelmantics.repository.DealRepository;
@@ -57,6 +60,9 @@ public class DealActivity extends AppCompatActivity {
 
         Button uploadBtn = findViewById(R.id.id_btn_select_image);
         imageView = findViewById(R.id.id_imagevw_select);
+        titleEdit = findViewById(R.id.id_edittxt_title);
+        descriptionEdit = findViewById(R.id.id_edittxt_description);
+        priceEdit = findViewById(R.id.id_edittxt_price);
 
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +76,28 @@ public class DealActivity extends AppCompatActivity {
         });
 
         imagePresent = false;
-        deal = new Deal();
+        if( getIntent().getExtras() != null ){
+            Bundle dealBundle = getIntent().getExtras();
+            deal = new Deal(dealBundle.getString(Utility.title_key), dealBundle.getString(Utility.description_key)
+            , dealBundle.getString(Utility.price_key), dealBundle.getString(Utility.image_url_key),
+                    dealBundle.getString(Utility.image_name_key));
+            deal.setAbsPath(dealBundle.getString(Utility.absolute_path_key));
+
+            titleEdit.setText(deal.getTitle());
+            priceEdit.setText(deal.getPrice());
+            descriptionEdit.setText(deal.getDescription());
+
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReference().child(deal.getImageUrl());
+
+            GlideApp.with(this)
+                    .load(storageRef)
+                    .into(imageView);
+            imageView.setVisibility(View.VISIBLE);
+        }else {
+            deal = new Deal();
+        }
+
     }
 
     @Override
@@ -90,10 +117,6 @@ public class DealActivity extends AppCompatActivity {
     }
 
     private void saveDeal() {
-
-        titleEdit = findViewById(R.id.id_edittxt_title);
-        descriptionEdit = findViewById(R.id.id_edittxt_description);
-        priceEdit = findViewById(R.id.id_edittxt_price);
 
         if( !isFormValid(titleEdit, descriptionEdit, priceEdit)){
             return;
@@ -145,6 +168,7 @@ public class DealActivity extends AppCompatActivity {
         } //end if
         else{
             Log.d("cata", "No Permission ");
+            Toast.makeText(this, "Permission required to upload image ", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -1,18 +1,21 @@
 package io.audioshinigami.travelmantics.viewholders;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import io.audioshinigami.travelmantics.GlideApp;
 import io.audioshinigami.travelmantics.R;
+import io.audioshinigami.travelmantics.activities.DealActivity;
 import io.audioshinigami.travelmantics.models.Deal;
+import io.audioshinigami.travelmantics.utility.Utility;
 
 public class DealViewHolder extends RecyclerView.ViewHolder {
 
@@ -20,6 +23,7 @@ public class DealViewHolder extends RecyclerView.ViewHolder {
     private TextView dealDescription;
     private TextView dealPrice;
     private ImageView imageView;
+    private Deal deal;
 
     public DealViewHolder(View view){
         super(view);
@@ -27,10 +31,29 @@ public class DealViewHolder extends RecyclerView.ViewHolder {
         dealDescription = view.findViewById(R.id.id_deal_description);
         dealPrice = view.findViewById(R.id.id_deal_price);
         imageView = view.findViewById(R.id.id_deal_image);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utility.launchActivity(DealActivity.class, (AppCompatActivity) view.getContext(), createBundle(deal));
+            }
+        });
     }
 
-    public void bind(Deal deal){
+    private Bundle createBundle(Deal deal){
+        Bundle dealBundle = new Bundle();
+        dealBundle.putString(Utility.title_key, deal.getTitle());
+        dealBundle.putString(Utility.price_key, deal.getPrice());
+        dealBundle.putString(Utility.description_key, deal.getDescription());
+        dealBundle.putString(Utility.image_name_key, deal.getImageName());
+        dealBundle.putString(Utility.image_url_key, deal.getImageUrl());
+        dealBundle.putString(Utility.absolute_path_key, deal.getAbsPath());
 
+        return dealBundle;
+    } /*end createBundle*/
+
+    public void bind(Deal deal){
+        this.deal = deal;
         dealTitle.setText(deal.getTitle());
         dealDescription.setText(deal.getDescription());
         dealPrice.setText(String.valueOf(deal.getPrice()));
