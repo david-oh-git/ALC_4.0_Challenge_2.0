@@ -126,7 +126,13 @@ public class DealRepository {
 
     private Deal addDeal(Map<String, Object> dealMap){
         return Deal.mapToDeal(dealMap);
-    }
+    }/*end addDeal*/
+
+    public void updateDeal(Map<String, Object> dealMap ){
+        //TODO code to update Deal
+    } /*end updateDeal*/
+
+
 
     public static DealRepository getInstance(){
         if( instance == null ){
