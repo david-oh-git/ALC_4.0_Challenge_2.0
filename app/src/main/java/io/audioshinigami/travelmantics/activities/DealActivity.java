@@ -149,22 +149,10 @@ public class DealActivity extends AppCompatActivity {
 
         if( requestCode == Utility.PICTURE_RESULT && resultCode == RESULT_OK && data.getData() != null){
             Uri imageUri = data.getData();
-            String absPath = Utility.getFilepath(imageUri, this );
-            String filename = absPath.substring( absPath.lastIndexOf('/')+1);
+            getDataFromUri(imageUri);
 
-            deal.setAbsPath(absPath);
-            deal.setImageName(filename);
-            deal.setImageUrl(Utility.image_location+ "/" + filename);
+            assignImageFromUri(imageUri);
 
-            try{
-//                InputStream stream = getContentResolver().openInputStream(imageUri);
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
-                imageView.setImageBitmap(bitmap);
-                imageView.setVisibility(View.VISIBLE);
-                imagePresent = true;
-            }catch (IOException e){
-                e.printStackTrace();
-            }
         } /*end IF*/
     } /*end onActivityResult*/
 
@@ -174,12 +162,36 @@ public class DealActivity extends AppCompatActivity {
 
         if(requestCode == Utility.SD_REQCODE && grantResults.length != 0 &&
                 grantResults[0] == PackageManager.PERMISSION_GRANTED ){
-            Log.d(Utility.TAG, "Write Permission granted");
+            Toast.makeText(this, "Permission granted ", Toast.LENGTH_SHORT).show();
         } //end if
         else{
             Log.d(Utility.TAG, "No Permission ");
             Toast.makeText(this, "Permission required to upload image ", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void getDataFromUri(Uri imageUri){
+        //extracts data from Uri
+        String absPath = Utility.getFilepath(imageUri, this );
+        String filename = absPath.substring( absPath.lastIndexOf('/')+1);
+
+        deal.setAbsPath(absPath);
+        deal.setImageName(filename);
+        deal.setImageUrl(Utility.image_location+ "/" + filename);
+    } /*end getData*/
+
+    private void assignImageFromUri(Uri imageUri){
+        // extracts / assigns image to imageview
+        try{
+//                InputStream stream = getContentResolver().openInputStream(imageUri);
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+            imageView.setImageBitmap(bitmap);
+            imageView.setVisibility(View.VISIBLE);
+            imagePresent = true;
+        }catch (IOException e){
+            e.printStackTrace();
+        } /*end try/catch*/
+
+    } /*end assignImage*/
 
 }

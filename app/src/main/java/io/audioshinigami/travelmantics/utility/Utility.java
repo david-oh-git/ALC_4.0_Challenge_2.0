@@ -63,13 +63,17 @@ public class Utility {
         // Get the cursor
         Cursor cursor = activity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
         // Move to first row
-        cursor.moveToFirst();
-        //Get the column index of MediaStore.Images.Media.DATA
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        //Gets the String value in the column
-        imgDecodableString = cursor.getString(columnIndex);
+        if( cursor != null ) {
+            cursor.moveToFirst();
 
-        cursor.close();
+            //Get the column index of MediaStore.Images.Media.DATA
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            //Gets the String value in the column
+            imgDecodableString = cursor.getString(columnIndex);
+
+            cursor.close();
+        }
+
 
         return imgDecodableString;
     }
@@ -79,29 +83,26 @@ public class Utility {
         /*checks if email and password is valid */
 
         boolean valid = true;
-        String email = titleEdit.getText().toString();
 
         TextInputEditText titleLayout = activity.findViewById(R.id.id_edittxt_title);
         TextInputEditText descriptionLayout = activity.findViewById(R.id.id_edittxt_description);
         TextInputEditText priceLayout = activity.findViewById(R.id.id_edittxt_price);
 
-        if( TextUtils.isEmpty(email) ){
+        if( titleEdit.getText()!= null && TextUtils.isEmpty(titleEdit.getText().toString()) ){
             titleEdit.requestFocus();
 //            titleEdit.setError("Required.");
             titleLayout.setError("Required.");
             valid = false;
         }
 
-        String password = descriptionEdit.getText().toString();
-        if( TextUtils.isEmpty(password)){
+        if( descriptionEdit.getText() != null && TextUtils.isEmpty(descriptionEdit.getText().toString())){
             descriptionEdit.requestFocus();
 //            descriptionEdit.setError("Required.");
             descriptionLayout.setError("Required.");
             valid = false;
         }
 
-        String price =  priceEdit.getText().toString();
-        if( TextUtils.isEmpty(price)){
+        if( priceEdit.getText() != null && TextUtils.isEmpty(priceEdit.getText().toString())){
             priceEdit.requestFocus();
 //            priceEdit.setError("Required.");
             priceLayout.setError("Required.");

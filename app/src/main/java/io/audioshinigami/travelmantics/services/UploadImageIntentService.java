@@ -22,7 +22,7 @@ public class UploadImageIntentService extends IntentService {
     }
 
     /**
-     * Starts this service to perform action Foo with the given parameters. If
+     * Starts this service to perform action Upload with the given parameters. If
      * the service is already performing a task this action will be queued.
      *
      * @see IntentService
