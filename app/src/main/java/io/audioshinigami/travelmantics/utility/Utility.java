@@ -4,11 +4,19 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.google.android.material.textfield.TextInputEditText;
+
+import io.audioshinigami.travelmantics.R;
 
 public class Utility {
 
@@ -23,7 +31,9 @@ public class Utility {
     public static String price_key = "price";
     public static String image_url_key = "imageUrl";
     public static String image_name_key = "imageName";
+    public static String id_key = "id";
     public static String absolute_path_key = "abs_path";
+
 
     private static boolean isStorageReadable(Context context){
         return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE ) == PackageManager.PERMISSION_GRANTED;
@@ -44,4 +54,61 @@ public class Utility {
 
         activity.startActivity(intent);
     } /*end launchActivity*/
+
+    public static String getFilepath(Uri selectedImage, AppCompatActivity activity){
+
+        String imgDecodableString = null;
+
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+        // Get the cursor
+        Cursor cursor = activity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        // Move to first row
+        cursor.moveToFirst();
+        //Get the column index of MediaStore.Images.Media.DATA
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        //Gets the String value in the column
+        imgDecodableString = cursor.getString(columnIndex);
+
+        cursor.close();
+
+        return imgDecodableString;
+    }
+
+    public static boolean isFormValid(TextInputEditText titleEdit, TextInputEditText descriptionEdit,
+                                TextInputEditText priceEdit , AppCompatActivity activity){
+        /*checks if email and password is valid */
+
+        boolean valid = true;
+        String email = titleEdit.getText().toString();
+
+        TextInputEditText titleLayout = activity.findViewById(R.id.id_edittxt_title);
+        TextInputEditText descriptionLayout = activity.findViewById(R.id.id_edittxt_description);
+        TextInputEditText priceLayout = activity.findViewById(R.id.id_edittxt_price);
+
+        if( TextUtils.isEmpty(email) ){
+            titleEdit.requestFocus();
+//            titleEdit.setError("Required.");
+            titleLayout.setError("Required.");
+            valid = false;
+        }
+
+        String password = descriptionEdit.getText().toString();
+        if( TextUtils.isEmpty(password)){
+            descriptionEdit.requestFocus();
+//            descriptionEdit.setError("Required.");
+            descriptionLayout.setError("Required.");
+            valid = false;
+        }
+
+        String price =  priceEdit.getText().toString();
+        if( TextUtils.isEmpty(price)){
+            priceEdit.requestFocus();
+//            priceEdit.setError("Required.");
+            priceLayout.setError("Required.");
+            valid = false;
+        }
+
+        return valid;
+
+    } /*end isFormvalid*/
 }

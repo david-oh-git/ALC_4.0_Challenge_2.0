@@ -48,6 +48,7 @@ public class DealViewHolder extends RecyclerView.ViewHolder {
         dealBundle.putString(Utility.image_name_key, deal.getImageName());
         dealBundle.putString(Utility.image_url_key, deal.getImageUrl());
         dealBundle.putString(Utility.absolute_path_key, deal.getAbsPath());
+        dealBundle.putString(Utility.id_key, deal.getId());
 
         return dealBundle;
     } /*end createBundle*/

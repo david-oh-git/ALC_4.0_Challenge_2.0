@@ -2,12 +2,10 @@ package io.audioshinigami.travelmantics.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -81,7 +79,9 @@ public class DealActivity extends AppCompatActivity {
             deal = new Deal(dealBundle.getString(Utility.title_key), dealBundle.getString(Utility.description_key)
             , dealBundle.getString(Utility.price_key), dealBundle.getString(Utility.image_url_key),
                     dealBundle.getString(Utility.image_name_key));
+
             deal.setAbsPath(dealBundle.getString(Utility.absolute_path_key));
+            deal.setId(dealBundle.getString(Utility.id_key));
 
             titleEdit.setText(deal.getTitle());
             priceEdit.setText(deal.getPrice());
@@ -112,13 +112,16 @@ public class DealActivity extends AppCompatActivity {
             finish();
         }else if( item.getItemId() == R.id.action_save_menu){
             saveDeal();
+        }else if( item.getItemId() == R.id.action_delete_menu){
+            deleteDeal();
+            finish();
         }
         return true;
     }
 
     private void saveDeal() {
 
-        if( !isFormValid(titleEdit, descriptionEdit, priceEdit)){
+        if( !Utility.isFormValid(titleEdit, descriptionEdit, priceEdit, this)){
             return;
         } /*end IF*/
 
@@ -133,13 +136,20 @@ public class DealActivity extends AppCompatActivity {
 
     }
 
+    private void deleteDeal(){
+        if(!deal.getId().isEmpty()){
+            Log.d(Utility.TAG, "ID : " + deal.getId());
+            DealRepository.getInstance().deleteDeal(deal.getId(), deal.getImageName());
+        }
+    } /*end deleteDeal*/
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if( requestCode == Utility.PICTURE_RESULT && resultCode == RESULT_OK && data.getData() != null){
             Uri imageUri = data.getData();
-            String absPath = getFilepath(imageUri);
+            String absPath = Utility.getFilepath(imageUri, this );
             String filename = absPath.substring( absPath.lastIndexOf('/')+1);
 
             deal.setAbsPath(absPath);
@@ -164,71 +174,12 @@ public class DealActivity extends AppCompatActivity {
 
         if(requestCode == Utility.SD_REQCODE && grantResults.length != 0 &&
                 grantResults[0] == PackageManager.PERMISSION_GRANTED ){
-            Log.d("cata", "Write Permission granted");
+            Log.d(Utility.TAG, "Write Permission granted");
         } //end if
         else{
-            Log.d("cata", "No Permission ");
+            Log.d(Utility.TAG, "No Permission ");
             Toast.makeText(this, "Permission required to upload image ", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-    private String getFilepath(Uri selectedImage){
-
-        String imgDecodableString = null;
-
-        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-        // Get the cursor
-        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-        // Move to first row
-        cursor.moveToFirst();
-        //Get the column index of MediaStore.Images.Media.DATA
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        //Gets the String value in the column
-        imgDecodableString = cursor.getString(columnIndex);
-
-        cursor.close();
-
-        return imgDecodableString;
-    }
-
-    private boolean isFormValid(TextInputEditText titleEdit, TextInputEditText descriptionEdit,
-                                TextInputEditText priceEdit ){
-        /*checks if email and password is valid */
-
-        boolean valid = true;
-        String email = titleEdit.getText().toString();
-
-        TextInputEditText titleLayout = findViewById(R.id.id_edittxt_title);
-        TextInputEditText descriptionLayout = findViewById(R.id.id_edittxt_description);
-        TextInputEditText priceLayout = findViewById(R.id.id_edittxt_price);
-
-        if( TextUtils.isEmpty(email) ){
-            titleEdit.requestFocus();
-//            titleEdit.setError("Required.");
-            titleLayout.setError("Required.");
-            valid = false;
-        }
-
-        String password = descriptionEdit.getText().toString();
-        if( TextUtils.isEmpty(password)){
-            descriptionEdit.requestFocus();
-//            descriptionEdit.setError("Required.");
-            descriptionLayout.setError("Required.");
-            valid = false;
-        }
-
-        String price =  priceEdit.getText().toString();
-        if( TextUtils.isEmpty(price)){
-            priceEdit.requestFocus();
-//            priceEdit.setError("Required.");
-            priceLayout.setError("Required.");
-            valid = false;
-        }
-
-        return valid;
-
-    } /*end isFormvalid*/
-
 
 }

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -39,9 +40,11 @@ public class DealRepository {
 
     public void addDeal(Deal deal, final AppCompatActivity context){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference dRef = db.collection(Utility.deal_location).document();
+        String id = dRef.getId();
+        deal.setId(id);
 
-        db.collection(Utility.deal_location).document()
-                .set(deal.toMap())
+        dRef.set(deal.toMap())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -128,9 +131,70 @@ public class DealRepository {
         return Deal.mapToDeal(dealMap);
     }/*end addDeal*/
 
-    public void updateDeal(Map<String, Object> dealMap ){
-        //TODO code to update Deal
+    public void deleteDeal(String id, String file_name){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference dRef = db.collection(Utility.deal_location).document(id);
+
+        dRef.delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+        deleteImage(file_name);
+
+    } /*end deleteDeal*/
+
+    public void updateDeal( Map<String, Object> dealMap ){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String id = (String) dealMap.get(Utility.id_key);
+        DocumentReference dRef = db.collection(Utility.deal_location).document(id);
+
+        final String file_name = (String) dealMap.get(Utility.image_name_key);
+
+        dRef.update(dealMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Utility.TAG, "Deal delete successful ");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(Utility.TAG, "Failed to update ");
+            }
+        });
     } /*end updateDeal*/
+
+    private void deleteImage(String filename){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference imageRef = storage.getReference().child(Utility.image_location)
+                .child(filename);
+
+        imageRef.delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(Utility.TAG, "Image deleted.. ");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(Utility.TAG, "Image failed to delete");
+                    }
+                });
+    } /*end deleteImage*/
 
 
 
